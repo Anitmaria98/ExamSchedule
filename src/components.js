@@ -106,8 +106,8 @@ export const Dropdown = (props) => {
       }}
 
     >
-      {items.map((item) => (
-        <option value={item}>
+      {items.map((item,index) => (
+        <option key={index} value={item}>
           {item}
         </option>
       ))}
