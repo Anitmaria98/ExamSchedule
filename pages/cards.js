@@ -1,9 +1,9 @@
 import React from "react";
-import { Header } from "./src/app";
-import GlobalStyle from "./src/globalStyles";
-import { Box } from "./src/components";
-import { Button, TextComponent } from "./src/components";
-import { Footer } from "./src/components";
+import { Header } from "../src/app";
+import GlobalStyle from "../src/globalStyles";
+import { Box } from "../src/components";
+import { Button, TextComponent } from "../src/components";
+import { Footer } from "../src/components";
 //  import Image from "next/image";
 //  import {deleteimg} from "../img/deleteimg.png";
 

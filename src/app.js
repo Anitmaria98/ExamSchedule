@@ -96,7 +96,7 @@ export const App = () => {
         paddingBottom:"20px",
         marginTop:"50px"
         }}/>
-      <Link href="/page2">    <a> <Button  buttonText=
+      <Link href="/page2"><a><Button  buttonText=
       {<TextComponent label="+Create New"/>}/></a></Link>
       </div>
       <Footer/>

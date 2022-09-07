@@ -522,11 +522,7 @@ const page2 = ({ data }) => {
       <Header />
       <div style={{ display: "flex", paddingLeft: "100px", fontWeight: 600 }}>
         <div style={{ marginTop: "150px", display: "flex" }}>
-          <Link href="/">
-            <a>
-              <FaArrowLeft size="40px" />
-            </a>
-          </Link>
+          <Link href="/"><a><FaArrowLeft size="40px"/></a></Link>
           <TextComponent
             label="Create new schedule"
             styleProps={{

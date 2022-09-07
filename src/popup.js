@@ -25,8 +25,8 @@ return(
     } 
 	position="right center">
 	<div>BE EEE SEM3 schedule was successfully created</div>
-	<Link href="/cards"><a>Go Home</a></Link>
-	<Link href="/page2"><a><button>Create New Schedule </button></a></Link>
+	<Link href="/"><a>Go Home</a></Link>
+	<Link href="/cards"><a><button>Create New Schedule </button></a></Link>
 	<button> Allocate schedule</button>
 	</Popup>
 </div>
