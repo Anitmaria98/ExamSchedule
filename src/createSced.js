@@ -28,7 +28,29 @@ const formdata = {
        ["19QSA011M", "Measurement and Instrumentation"],
        [ "19HSM002","Electrical Machines"],
     ],
-    Semester:
+    //    subjects:[
+    // {
+    //     subjectCode:"19QSA011",
+    //     subjectName:"Measurement and Instrumentation"
+    //   },
+    //   {
+    //     subjectCode:"19HSM002",
+    //     subjectName:"Electrical Machines"
+    //   },
+    //   {
+    //     subjectCode:"19ASR008",
+    //     subjectName:"Power Systems"
+    //   },
+    //   {
+    //     subjectCode:"19CTR105",
+    //     subjectName:"Microcontrollers"
+    //   },
+    //   {
+    //     subjectCode:"19MNS202",
+    //     subjectName:"Control Systems"
+    //   }
+    // ],
+    semester:
         [
           {
             semesterNumber:3,
@@ -37,35 +59,9 @@ const formdata = {
           },
           {
             semesterNumber:5,
-            subjectsNumber:5,
-            labsNumber:2
+            subjectsNumber:3,
+            labsNumber:1
           }
         ]
       }
   export default formdata;
-
-
-
-
-
-
-// {
-//   subjectCode:"19QSA011",
-//   subjectName:"Measurement and Instrumentation"
-// },
-// {
-//   subjectCode:"19HSM002",
-//   subjectName:"Electrical Machines"
-// },
-// {
-//   subjectCode:"19ASR008",
-//   subjectName:"Power Systems"
-// },
-// {
-//   subjectCode:"19CTR105",
-//   subjectName:"Microcontrollers"
-// },
-// {
-//   subjectCode:"19MNS202",
-//   subjectName:"Control Systems"
-// }

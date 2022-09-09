@@ -4,8 +4,8 @@ import GlobalStyle from "../src/globalStyles";
 import { Box } from "../src/components";
 import { Button, TextComponent } from "../src/components";
 import { Footer } from "../src/components";
-//  import Image from "next/image";
-//  import {deleteimg} from "../img/deleteimg.png";
+ import Image from "next/image";
+ //import {deleteimg} from "../images/deleteimg.png";
 
 const Cards = () => {
     return (
@@ -38,9 +38,19 @@ const Cards = () => {
 
                 <Box bools="true" />
                 <Box header="BE IT SEM 3" boole="true" >
+                <div
+          style={{
+            paddingLeft: "359.5px",
+            paddingTop: "26px",
+            paddingRight: "13.5px",
+          }}
+        >
+          <img src="https://i.ibb.co/Pgq1VFK/delete.png" alt="delete" border="0"/>
+        </div>
                 </Box>
                 <Box header="BE EEE SEM 3" blue="true" />
             </div>
+        
             <div
                 style={{
                     paddingTop: "50px",
@@ -59,7 +69,7 @@ const Cards = () => {
         </>
     );
 };
-// export const DeleteImage = () => {
-//     return <Image src={deleteimg} alt="Picture delete" width={24} height={24}/>;
+// export const deleteimage = () => {
+//     return <Image src={deleteimage} alt="Picture delete" width={24} height={24}/>;
 //   };
 export default Cards;

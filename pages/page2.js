@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "../src/app";
 import GlobalStyle from "../src/globalStyles";
 import { FaArrowLeft, FaCodeBranch } from "react-icons/fa";
@@ -19,17 +19,20 @@ import { useAmp } from "next/amp";
 const Main2 = ({ data }) => {
   let [Branch, setBranch] = useState('B.E');
   let [Department, setDepartment] = useState(null);
-  let [Examtype,setExamtype] = useState(null);
-  let [Semester,setSemester]= useState(null);
-  let [Subject,setSubject]=useState(null);
-  let [Labs,setLabs]= useState(null);
-  let [Subject1,setSubject1] = useState(null);
-  let [Subject2,setSubject2] = useState(null);
-  let [Subject3,setSubject3] = useState(null);
-  let [Subject4,setSubject4] = useState(null);
-  let [Subject5,setSubject5] = useState(null);
-  let [lab1,setlab1] = useState(null);
-  let [lab2,setlab2] = useState(null);
+  let [Examtype, setExamtype] = useState(null);
+  let [semester, setSemester] = useState(null);
+  let [Subject, setSubject] = useState(0);
+  let [Labs, setLabs] = useState(null);
+  let [Subject1, setSubject1] = useState(null);
+  let [Subject2, setSubject2] = useState(null);
+  let [Subject3, setSubject3] = useState(null);
+  let [Subject4, setSubject4] = useState(null);
+  let [Subject5, setSubject5] = useState(null);
+  let [lab1, setlab1] = useState(null);
+  let [lab2, setlab2] = useState(null);
+  const [session,setSession]=useState(null);
+  const[allSession,setAllSession]=useState(null);
+  
   return (
     <>
       <div
@@ -58,7 +61,7 @@ const Main2 = ({ data }) => {
               width: "344px",
               height: "56px"
             }}
-            setSelectedValue={setBranch} items = {formdata.branchanddep.map(item=>item.branch)} 
+              setSelectedValue={setBranch} items={formdata.branchanddep.map(item => item.branch)}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -77,14 +80,18 @@ const Main2 = ({ data }) => {
               width: "344px",
               height: "56px"
             }}
-            items = {formdata.branchanddep.find(item=> item.branch == Branch).deps} setSelectedValue={setDepartment}
-  
+              items={formdata.branchanddep.find(item => item.branch == Branch).deps} setSelectedValue={setDepartment}
+
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <InputComponent
-              yolo="yolo"
               type="text"
+              value={semester}
+              onChange={(event) => {
+                setSemester(event.target.value)
+                setSubject(formdata.semester.find(item => item.semesterNumber == semester)?.subjectsNumber)
+              }}
               label={
                 <TextComponent
                   label="Semester"
@@ -98,7 +105,6 @@ const Main2 = ({ data }) => {
                     paddingTop: "10px",
                     paddingBottom: 0
                   }}
-                 setSelectedValue={setSemester} items = {formdata.branchanddep.map(item=>item.Semester)}
                 ></TextComponent>
               }
               placeholder="3"
@@ -129,9 +135,8 @@ const Main2 = ({ data }) => {
         width: "1090px",
         height: "56px"
       }}
-      setSelectedValue ={setExamtype} items={formdata.Examtype}
+        setSelectedValue={setExamtype} items={formdata.Examtype}
       />
-
 
       <TextComponent
         label="Time Range"
@@ -164,9 +169,16 @@ const Main2 = ({ data }) => {
         label="3 hours"
         styleProps={{ paddingRight: "10em" }}
       />
-      <input type="checkbox" />
+    
+      <input type="checkbox"
+      checked={allSession=='FN' ? true : false}  
+      onChange={(event) =>{
+        if(event.target.checked == true) setAllSession("FN");
+      }
+    }
+/>
       <TextComponent CustomTag="span" label="Set for all FN"
-       />
+      />
       <br></br>
       <TextComponent
         CustomTag="span"
@@ -179,24 +191,29 @@ const Main2 = ({ data }) => {
         }}
       />
       <Picker min={1} max={12} />
-      <Picker min={1} max={59} />
+      <Picker min={0} max={59} />
       <TextComponent CustomTag="span" label="to" />
       <Picker min={1} max={12} />
-      <Picker min={1} max={59} />
+      <Picker min={0} max={59} />
       <TextComponent
         CustomTag="span"
         label="3 hours"
         styleProps={{ paddingRight: "10em" }}
       />
-      <input type="checkbox" />
+      <input type="checkbox" checked={allSession=='AN' ? true : false}  
+      onChange={(event) =>{
+      setAllSession(null);
+        if(event.target.checked == true) setAllSession("AN");
+      }
+    }
+/>
       <TextComponent CustomTag="span" label="Set for all AN" />
       <div style={{ display: "flex", padding: "10px" }}>
 
 
         <InputComponent
-          yolo="yolo"
           type="text"
-
+          value={formdata.semester.find(item => item.semesterNumber == semester)?.subjectsNumber}
           label={
             <TextComponent
               label="Subjects"
@@ -207,11 +224,11 @@ const Main2 = ({ data }) => {
                 paddingTop: "10px",
                 paddingBottom: 0
               }}
-              items = {formdata.branchanddep.find(item=> item.Semester == Semester).semesterNumber} setSelectedValue={setSubject}
-  >
+
+            >
             </TextComponent>
           }
-          placeholder="5"
+          //placeholder="5"
           style={{
             width: "344px",
             height: "56px",
@@ -223,7 +240,7 @@ const Main2 = ({ data }) => {
         />
         <InputComponent
           type="text"
-          yolo="yolo"
+          value={formdata.semester.find(item => item.semesterNumber == semester)?.labsNumber}
           label={
             <TextComponent
               label="Labs"
@@ -236,7 +253,7 @@ const Main2 = ({ data }) => {
               }}
             ></TextComponent>
           }
-          placeholder="2"
+          //placeholder="2"
           style={{
             width: "344px",
             height: "56px",
@@ -247,182 +264,12 @@ const Main2 = ({ data }) => {
         />
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextComponent
-            label="Subject1"
-            styleProps={{ fontWeight: "700", paddingTop: "10px" }}
-          />
-          <Dropdown style={{
-            width: "181px",
-            height: "56px"
-          }}
-          setSelectedValue ={setSubject1} items= {formdata.subjects.map(item => item[0])}
-          />
-        </div>
-        <InputComponent
-          //placeholder="Measurement and Instrumentation"
+      {[...Array(formdata.semester.find(item => item.semesterNumber == semester)?.subjectsNumber).keys()].map((x, i) =>
+        <SubjectComponent allSession={allSession} />
+      )}
 
-          style={{
-            marginTop: "25px",
-            marginLeft: "20px",
-            width: "423px",
-            height: "56px"
-          }}
-          
-        />
-        <DatePick />
-        <span>
-        <button onClick ={()=>console.log("clicked")}style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}
-          >FN </button>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>AN</button>
-        </span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextComponent
-            label="Subject2"
-            styleProps={{ fontWeight: "700", paddingTop: "10px" }}
-          />
-          <Dropdown style={{
-            width: "181px",
-            height: "56px"
-          }}
-            //value={formdata.subjects}
-            setSelectedValue ={setSubject2} items= {formdata.subjects.map(item => item[0])}
-          />
-        </div>
-        <InputComponent
-          //placeholder="Electrical Machines"
-          style={{
-            marginTop: "25px",
-            marginLeft: "20px",
-            width: "423px",
-            height: "56px"
-          }}
-        />
-        <DatePick />
-        <span>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>FN</button>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>AN</button>
-        </span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextComponent
-            label="Subject3"
-            styleProps={{ fontWeight: "700", paddingTop: "10px" }}
-          />
-          <Dropdown style={{
-            width: "181px",
-            height: "56px"
-          }}
-            //value={formdata.subjects}
-            setSelectedValue ={setSubject3} items= {formdata.subjects.map(item => item[0])}
-          />
-        </div>
-        <InputComponent
-          //placeholder="Power Systems"
-          style={{
-            marginTop: "25px",
-            marginLeft: "20px",
-            width: "423px",
-            height: "56px"
-          }}
-        />
-        <DatePick />
-        <span>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>FN</button>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>AN</button>
-        </span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextComponent
-            label="Subject4"
-            styleProps={{ fontWeight: "700", paddingTop: "10px" }}
-          />
-          <Dropdown style={{
-            width: "181px",
-            height: "56px"
-          }}
-            //value={formdata.subjects}
-            setSelectedValue ={setSubject4} items= {formdata.subjects.map(item => item[0])} />
-        </div>
-        <InputComponent
-          //placeholder="Microcontrollers"
-          style={{
-            marginTop: "25px",
-            marginLeft: "20px",
-            width: "423px",
-            height: "56px"
-          }}
-        />
-        <DatePick />
-        <span>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>FN</button>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>AN</button>
-        </span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextComponent
-            label="Subject5"
-            styleProps={{ fontWeight: "700", paddingTop: "10px" }}
-          />
-          <Dropdown style={{
-            width: "181px",
-            height: "56px"
-          }}
-            //value={formdata.subjects}
-            setSelectedValue ={setSubject5} items= {formdata.subjects.map(item => item[0])}
-          />
-        </div>
-        <InputComponent
-          //placeholder="Control Systems"
-          style={{
-            marginTop: "25px",
-            marginLeft: "20px",
-            width: "423px",
-            height: "56px"
-          }}
-        />
-        <DatePick />
-        <span>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>FN</button>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>AN</button>
-        </span>
-      </div>
+
+
       <TextComponent
         label="Lab"
         styleProps={{
@@ -432,88 +279,132 @@ const Main2 = ({ data }) => {
         }}
 
       />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextComponent
-            label="Lab1"
-            styleProps={{ fontWeight: "700", paddingTop: "10px" }}
-          />
-          <Dropdown style={{
-            width: "181px",
-            height: "56px"
-          }}
-            //value={formdata.labs}
-            setSelectedValue ={setlab1} items= {formdata.labs.map(item => item[0])}
-          />
-        </div>
-        <InputComponent
-          //placeholder="Measurement and Instrumentation"
-          style={{
-            marginTop: "25px",
-            marginLeft: "20px",
-            width: "423px",
-            height: "56px"
-          }}
-        />
-        <DatePick />
-        <span>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>FN</button>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>AN</button>
-        </span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <TextComponent
-            label="lab2"
-            styleProps={{ fontWeight: "700", paddingTop: "10px" }}
-          />
-          <Dropdown style={{
-            width: "181px",
-            height: "56px"
-          }}
-            //value={formdata.labs}
-            setSelectedValue ={setlab2} items= {formdata.labs.map(item => item[0])}
-          />
-        </div>
-        <InputComponent
-          //placeholder="Electrical Machine"
-          style={{
-            marginTop: "25px",
-            marginLeft: "20px",
-            width: "423px",
-            height: "56px"
-          }}
-        />
-        <DatePick
-          style={{
-            width: "423px",
-            height: "56px"
-          }}
-        />
-        <span>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }}>FN</button>
-          <button style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: "#FFFFFF" }} >AN</button>
-        </span>
-      </div>
-
-
+      {[...Array(formdata.semester.find(item => item.semesterNumber == semester)?.labsNumber).keys()].map((x, i) =>
+        <LabComponent allSession={allSession} />
+      )}
     </>
+
 
   );
 };
+
+const SubjectComponent = (props) => {
+  let [subCode, setSubCode] = useState();
+  let [subName, setSubName] = useState();
+  let [subDate, setSubDate] = useState();
+  let [session,setSession] = useState(props.allSession);
+  useEffect(() =>{
+    setSession(props.allSession);
+  },[props.allSession]);
+  
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <TextComponent
+          label="Subject1"
+          styleProps={{ fontWeight: "700", paddingTop: "10px" }}
+        />
+        <Dropdown style={{
+          width: "181px",
+          height: "56px"
+        }}
+
+          setSelectedValue={setSubCode} items={formdata.subjects.map(item => item[0])}
+        />
+      </div>
+      <InputComponent
+        //placeholder="Measurement and Instrumentation"
+        value={formdata.subjects.find(item =>item[0] == subCode) ? formdata.subjects.find(item => item[0] == subCode)[1] : ""}
+
+        style={{
+          marginTop: "25px",
+          marginLeft: "20px",
+          width: "423px",
+          height: "56px"
+        }}
+
+      />
+      <DatePick />
+      <span>
+      <button onClick={() =>{
+        setSession("FN");
+      }}
+       style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background :session === "FN" ? "#5375E2" : "white"  }}
+        >FN </button>
+
+        <button onClick={() =>{
+        setSession("AN");
+      }} style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: session === "AN" ? "#5375E2" : "white"}}>AN</button>
+      </span>
+    </div>
+  
+  )
+}
+const LabComponent = (props) => {
+  let [labCode, setLabCode] = useState();
+  let [labName, setLabName] = useState();
+  let [labDate, setLabDate] = useState();
+  let [session,setSession] = useState();
+  useEffect(() =>{
+    setSession(props.allSession);
+  },[props.allSession]);
+  
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
+    >
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <TextComponent
+          label="Lab1"
+          styleProps={{ fontWeight: "700", paddingTop: "10px" }}
+        />
+        <Dropdown style={{
+          width: "181px",
+          height: "56px"
+        }}
+          //value={formdata.labs}
+          setSelectedValue={setLabCode} items={formdata.labs.map(item => item[0])}
+        />
+      </div>
+      <InputComponent
+        //placeholder="Measurement and Instrumentation"
+        value={formdata.labs.find(item => item[0] == labCode) ? formdata.labs.find(item => item[0] == labCode)[1] : ""}
+        style={{
+          marginTop: "25px",
+          marginLeft: "20px",
+          width: "423px",
+          height: "56px"
+        }}
+      />
+      <DatePick />
+      <span>
+      <button onClick={() =>{
+        setSession("FN");
+      }}
+       style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background :session === "FN" ? "#5375E2" : "white"  }}
+        >FN </button>
+
+        <button onClick={() =>{
+        setSession("AN");
+      }} style={{ width: "68px", height: "56px", marginTop: "25px", marginLeft: "20px", border: "1px solid #5375E2", background: session === "AN" ? "#5375E2" : "white"}}>AN</button>
+      </span>
+      
+    </div>
+
+  )
+}
 
 const page2 = ({ data }) => {
   return (
@@ -522,7 +413,7 @@ const page2 = ({ data }) => {
       <Header />
       <div style={{ display: "flex", paddingLeft: "100px", fontWeight: 600 }}>
         <div style={{ marginTop: "150px", display: "flex" }}>
-          <Link href="/"><a><FaArrowLeft size="40px"/></a></Link>
+          <Link href="/"><a><FaArrowLeft size="40px" /></a></Link>
           <TextComponent
             label="Create new schedule"
             styleProps={{
@@ -552,3 +443,5 @@ const page2 = ({ data }) => {
   );
 };
 export default page2;
+
+

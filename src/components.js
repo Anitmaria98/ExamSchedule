@@ -31,11 +31,31 @@ export const Button = (props) => {
         }}
       >
         {props.buttonText}
+  
       </button>
     </>
   );
 };
+export const Button1 = (props) => {
+  return (
+    <>
+      <button label={props.buttonText}
+        style={{
+            // boxSizing: "border-box",
+            // position: "absolute",
+            // width: "101px",
+            // height: "35.96px",
+            // backgroundColor: "#FFFFFF",
+            // borderRadius: "10px",
+            // border: "1px solid #5375E2",
 
+        }}
+      >
+
+    </button>
+  </>
+);
+};
 export const Footer = () => {
   return (
     <footer
@@ -107,7 +127,7 @@ export const Dropdown = (props) => {
 
     >
       {items.map((item,index) => (
-        <option key={index} value={item}>
+        <option key={index}value={item}>
           {item}
         </option>
       ))}
@@ -119,9 +139,10 @@ export const Dropdown = (props) => {
 };
 
 export const Picker = (props) => {
-   <button onClick ={()=>console.log("clicked",props.foo)}>Text</button> 
+  <button onClick ={()=>console.log("clicked",props.foo)}>Text</button> 
     return(
-    <input
+      <>
+      <input
       type="number"
       id="date"
       name="date"
@@ -133,6 +154,8 @@ export const Picker = (props) => {
         border: "1px solid #E8E8EA"
       }}
     ></input>
+      </>
+    
   );
 };
 
@@ -141,7 +164,7 @@ export const InputComponent = (props) => {
     <div
       style={{
         display: "flex",
-        flexDirection: props.yolo === "yolo" ? "column" : "row",
+        flexDirection: "column"
       }}
     >
       <TextComponent CustomTag="div" label={props.label} />
@@ -195,9 +218,11 @@ export const Box = (props) => {
         label={props.header}
         styleProps={{
           fontSize: "24px",
+          fontFamily:"Nunito-Sans",
           textAlign: "left",
-          fontWeight: 400,
+          fontWeight: 700,
           margin: "10px",
+          lineHeight:"33px"
         }}
       />
       {!props.bools && (
@@ -208,6 +233,7 @@ export const Box = (props) => {
               flexDirection: "row",
               justifyContent: "space-evenly",
               fontWeight: 700,
+              fontSize:"14px"
             }}
           >
             <TextComponent label="Branch" />
@@ -219,7 +245,10 @@ export const Box = (props) => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-evenly",
-              fontWeight: 400,
+              fontWeight: 700,
+              fontSize:"16px",
+              color:"#ABA9AE",
+              lineHeight:"22px"
             }}
           >
             <TextComponent label="BE" />
@@ -232,7 +261,8 @@ export const Box = (props) => {
               flexDirection: "row",
               justifyContent: "space-evenly",
               fontWeight: 700,
-              paddingTop: "25px"
+              paddingTop: "25px",
+              fontSize:"14px"
             }}
           >
             <TextComponent label="Subject" />
@@ -244,7 +274,10 @@ export const Box = (props) => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-evenly",
-              fontWeight: 400,
+              fontWeight: 700,
+              fontSize:"16px",
+              color:"#ABA9AE",
+              lineHeight:"22px"
             }}
           >
             <TextComponent label="5" />
@@ -257,7 +290,7 @@ export const Box = (props) => {
         <div
           style={{
             backgroundColor: "#FFA500",
-            height: "53px",
+            height: "47px",
             border: "1px solid #FFA500",
             borderRadius: "10px",
             justifyContent: "bottom",
@@ -266,22 +299,22 @@ export const Box = (props) => {
             display: "flex",
             color: "white",
             fontSize: "20px",
+            fontStyle:"normal"
           }}
         >
           Not Allocated
-          <Button buttonText={<TextComponent label="Allocate" style={{
-            backgroundColor: "#FFFFFF",
-            borderRadius: "5px",
+          {/* <Button1 styleProps={{
+            boxSizing: "border-box",
+            position: "absolute",
             width: "101px",
             height: "35.96px",
-            fontWeight: "400",
-            fontSize: "20px",
-            color: "white",
-            marginBottom: "150px",
-            marginLeft: "50px"
-          }} />}
+            backgroundColor: "#FFFFFF",
+            borderRadius: "10px",
+            border: "1px solid #5375E2"
+          }} label={"Allocate"}
 
-          />
+          /> */}
+          
         </div>
       )}
       {props.blue && (
@@ -306,7 +339,15 @@ export const Box = (props) => {
         <Link href="/page2">
           <a>
             <center>
-              <Button buttonText={<TextComponent label="+   Create New" />}
+              <Button style=
+              {{
+                position: "absolute",
+                width: "102px",
+                height: "35.96px",
+                borderRadius: "5px",
+                padding:"100px 100px",
+                display:"flex"
+              }} buttonText={<TextComponent label="+   Create New" />}
               />
             </center>
           </a>
